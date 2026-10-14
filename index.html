@@ -72,7 +72,7 @@ const iso=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.t
 let cur=iso(new Date());
 const dow=s=>new Date(s+'T12:00').getDay();
 const day=s=>S.days[s]||(S.days[s]={food:[],sets:{},knee:{},cardio:{},extra:{}});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&','<':'<','>':'>','"':'"'}[c]));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>'&'+({'&':'amp','<':'lt','>':'gt','"':'quot'}[c])+';');
 function addFood(f){const d=day(cur);d.food.push({meal:$('meal').value,n:f[0],s:f[1],k:+f[2]||0,p:+f[3]||0,c:+f[4]||0,f:+f[5]||0});save();render()}
 function tot(d){return(d?.food||[]).reduce((a,x)=>({k:a.k+x.k,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{k:0,p:0,c:0,f:0})}
 function bar(l,v,t,u,big){const pct=Math.min(100,v/t[1]*100);return`<div class="lbl"><span>${l}</span><b>${Math.round(v)} / ${t[0]}–${t[1]} ${u}</b></div><div class="bar ${big?'big':''}"><i style="width:${pct}%;${!big&&v>t[1]?'background:var(--wa)':''}"></i></div>`}
